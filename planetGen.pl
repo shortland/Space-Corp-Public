@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 # all credit to http://fantasynamegenerators.com/planet_names.php
-# this is basically a perl ripoff version of their script
+# this is basically a perl ripoff version of her script
 
 use CGI;
 
