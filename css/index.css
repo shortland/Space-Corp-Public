@@ -1,0 +1,28 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800);
+
+* 
+{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    font-family: 'Open Sans', sans-serif;
+}
+
+body 
+{
+    background-color: #000000;
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+    -webkit-user-select: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+#izk
+{
+    color: #000000;
+    position: absolute;
+    top: 40%;
+    text-align: center;
+    font-size: 64px;
+    font-weight: 800;
+    width: 100%;
+}

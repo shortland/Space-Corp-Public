@@ -1,0 +1,202 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800);
+
+* 
+{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    font-family: 'Open Sans', sans-serif;
+    -webkit-appearance: none;
+    -mox-appearance: none;
+    -o-appearance: none;
+    -ms-appearance: none;
+    color: #FFFFFF;
+}
+
+body 
+{
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+    -webkit-user-select: none;
+    padding: 0px;
+    margin: 0px;
+
+    background-color: #000000;
+}
+
+a, a:link, a:visited, a:hover, a:active
+{
+    -webkit-appearance: none;
+    -mox-appearance: none;
+    -o-appearance: none;
+    -ms-appearance: none;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+#buttonStart
+{
+    /*background: url(../images/newletuce.png) no-repeat center;
+    background-size: cover;
+    width: 180px;
+    height: 40px;*/
+    text-align: center;
+}
+
+button, .button
+{
+    cursor: pointer;
+    width: 180px !important; /* 1.) change its value in main.js & 2.) change its value in #selectedAccount */
+    height: 24px;
+    font-size: 11px;
+    padding-left: 30px;
+    text-align: left;
+    font-weight: 300;
+    color: #FFFFFF;
+    border-radius: 0px;
+    border: 1px solid rgba(44, 123, 204, 0.5);
+    background: -webkit-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: -o-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: -moz-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+}
+
+button:hover, .button:hover, button:active, .button:active, #selectedAccount:hover, #selectedAccount:active
+{
+    background: -webkit-radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+    background: -o-radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+    background: -moz-radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+    background: radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+}
+
+#mainMenuItems
+{
+    position: absolute;
+}
+
+#selectedAccount
+{
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 12px;
+    position: relative;
+    width: 120px;
+    left: 30px;
+    text-align: center;
+    border-bottom: 1px solid rgb(54, 103, 255);
+    border-left: 1px solid rgb(54, 103, 255);
+    border-right: 1px solid rgb(54, 103, 255);
+    background: -webkit-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: -o-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: -moz-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+}
+
+#frameOpener
+{
+    display: none;
+}
+
+.editpic
+{
+    height: 11px;
+    width: 11px;
+    position: absolute;
+    left: 160px;
+    margin-top: 2.5px;
+}
+
+#accountList
+{
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 1);
+    display: none;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    border-radius: 0px;
+    box-shadow: 0 0 0 2px hsla(210, 65%, 49%, 0.3), 0 0 0 6px hsla(225, 100%, 61%, 0.3);
+}
+
+#accountListHeader
+{
+    z-index: 3;
+    background: -webkit-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: -o-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: -moz-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    position: relative;
+    width: 100%;
+    height: 30px;
+    border-bottom: 1px solid rgb(54, 103, 255);
+    text-align: center;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 30px;
+}
+
+#accountListClose
+{
+    z-index: 4;
+    top: 2px;
+    position: absolute;
+    height: 24.5px;
+    width: 50px;
+    line-height: 24px;
+}
+
+.closeButton
+{
+    cursor: pointer;
+    background: -webkit-radial-gradient(rgba(70, 0, 0, 0.6), rgba(153, 0, 0, 0.9));
+    background: -o-radial-gradient(rgba(70, 0, 0, 0.6), rgba(153, 0, 0, 0.9));
+    background: -moz-radial-gradient(rgba(70, 0, 0, 0.6), rgba(153, 0, 0, 0.9));
+    background: radial-gradient(rgba(70, 0, 0, 0.6), rgba(153, 0, 0, 0.9));
+    text-align: center;
+    font-weight: 400;
+    border: 0.5px solid #FF0000;
+}
+
+.closeButton:hover, .closeButton:active
+{
+    background: -webkit-radial-gradient(rgba(99, 0, 0, 0.8), rgba(153, 0, 0, 1));
+    background: -o-radial-gradient(rgba(99, 0, 0, 0.8), rgba(153, 0, 0, 1));
+    background: -moz-radial-gradient(rgba(99, 0, 0, 0.8), rgba(153, 0, 0, 1));
+    background: radial-gradient(rgba(99, 0, 0, 0.8), rgba(153, 0, 0, 1));
+}
+
+#accountAddAnother
+{
+    z-index: 4;
+    cursor: pointer;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100% !important;
+    height: 30px !important;
+    text-align: center !important;
+    font-weight: 600;
+    color: #FFFFFF;
+    border-radius: 0px;
+    border-top: 1px solid rgba(44, 123, 204, 0.5);
+    background: -webkit-radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+    background: -o-radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+    background: -moz-radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+    background: radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+    line-height: 30px;
+}
+
+#accountAddAnother:hover
+{
+    background: -webkit-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: -o-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: -moz-radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+    background: radial-gradient(rgba(0, 31, 122, 0.1), rgba(0, 31, 122, 0.5));
+}
+
+#accountFrame
+{
+    z-index: 5;
+    width: 100%;
+}
+
