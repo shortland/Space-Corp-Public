@@ -1,0 +1,14 @@
+[{"name" : "metal_mine", "level" : "1", "income" : "500", "upgrade_cost" : "3000", "upgrade_time" : "5"}, //5sec
+ {"name" : "metal_mine", "level" : "2", "income" : "750", "upgrade_cost" : "5000", "upgrade_time" : "30"}, //30sec
+ {"name" : "metal_mine", "level" : "3", "income" : "1000", "upgrade_cost" : "10000", "upgrade_time" : "60"}, //1m
+ {"name" : "metal_mine", "level" : "4", "income" : "1500", "upgrade_cost" : "15000", "upgrade_time" : "300"}, //5m
+ {"name" : "metal_mine", "level" : "5", "income" : "2000", "upgrade_cost" : "20000", "upgrade_time" : "900"}, //15m
+ {"name" : "metal_mine", "level" : "6", "income" : "3000", "upgrade_cost" : "25000", "upgrade_time" : "1800"}, //30m
+ {"name" : "metal_mine", "level" : "7", "income" : "4000", "upgrade_cost" : "35000", "upgrade_time" : "3600"}, //1h
+ {"name" : "metal_mine", "level" : "8", "income" : "5500", "upgrade_cost" : "55000", "upgrade_time" : "10800"}, //3h
+ {"name" : "metal_mine", "level" : "9", "income" : "7000", "upgrade_cost" : "75000", "upgrade_time" : "21600"}, //6h
+ {"name" : "metal_mine", "level" : "10", "income" : "10000", "upgrade_cost" : "150000", "upgrade_time" : "32400"}, //9h
+ {"name" : "metal_mine", "level" : "11", "income" : "14000", "upgrade_cost" : "200000", "upgrade_time" : "43200"}, //12h
+ {"name" : "metal_mine", "level" : "12", "income" : "18000", "upgrade_cost" : "300000", "upgrade_time" : "64800"}, //18h
+ {"name" : "metal_mine", "level" : "12", "income" : "23000", "upgrade_cost" : "450000", "upgrade_time" : "86400"}, //24h
+ {"name" : "metal_mine", "level" : "12", "income" : "25000", "upgrade_cost" : "750000", "upgrade_time" : "97200"}] //27h
