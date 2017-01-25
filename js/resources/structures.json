@@ -1,5 +1,226 @@
-metal_mine_data = '[{"name" : "metal_mine", "level" : "1", "income" : "500", "upgrade_cost" : "3000", "upgrade_time" : "5"}, {"name" : "metal_mine", "level" : "2", "income" : "750", "upgrade_cost" : "5000", "upgrade_time" : "30"}, {"name" : "metal_mine", "level" : "3", "income" : "1000", "upgrade_cost" : "10000", "upgrade_time" : "60"}, {"name" : "metal_mine", "level" : "4", "income" : "1500", "upgrade_cost" : "15000", "upgrade_time" : "300"}, {"name" : "metal_mine", "level" : "5", "income" : "2000", "upgrade_cost" : "20000", "upgrade_time" : "900"}, {"name" : "metal_mine", "level" : "6", "income" : "3000", "upgrade_cost" : "25000", "upgrade_time" : "1800"}, {"name" : "metal_mine", "level" : "7", "income" : "4000", "upgrade_cost" : "35000", "upgrade_time" : "3600"}, {"name" : "metal_mine", "level" : "8", "income" : "5500", "upgrade_cost" : "55000", "upgrade_time" : "10800"}, {"name" : "metal_mine", "level" : "9", "income" : "7000", "upgrade_cost" : "75000", "upgrade_time" : "21600"}, {"name" : "metal_mine", "level" : "10", "income" : "10000", "upgrade_cost" : "150000", "upgrade_time" : "32400"}, {"name" : "metal_mine", "level" : "11", "income" : "14000", "upgrade_cost" : "200000", "upgrade_time" : "43200"}, {"name" : "metal_mine", "level" : "12", "income" : "18000", "upgrade_cost" : "300000", "upgrade_time" : "64800"}, {"name" : "metal_mine", "level" : "12", "income" : "23000", "upgrade_cost" : "450000", "upgrade_time" : "86400"}, {"name" : "metal_mine", "level" : "12", "income" : "25000", "upgrade_cost" : "750000", "upgrade_time" : "97200"}]';
-
-crystal_mine_data = '[{"name" : "crystal_mine", "level" : "1", "income" : "500", "upgrade_cost" : "3000", "upgrade_time" : "5"}, {"name" : "crystal_mine", "level" : "2", "income" : "750", "upgrade_cost" : "5000", "upgrade_time" : "30"}, {"name" : "crystal_mine", "level" : "3", "income" : "1000", "upgrade_cost" : "10000", "upgrade_time" : "60"}, {"name" : "crystal_mine", "level" : "4", "income" : "1500", "upgrade_cost" : "15000", "upgrade_time" : "300"}, {"name" : "crystal_mine", "level" : "5", "income" : "2000", "upgrade_cost" : "20000", "upgrade_time" : "900"}, {"name" : "crystal_mine", "level" : "6", "income" : "3000", "upgrade_cost" : "25000", "upgrade_time" : "1800"}, {"name" : "crystal_mine", "level" : "7", "income" : "4000", "upgrade_cost" : "35000", "upgrade_time" : "3600"}, {"name" : "crystal_mine", "level" : "8", "income" : "5500", "upgrade_cost" : "55000", "upgrade_time" : "10800"}, {"name" : "crystal_mine", "level" : "9", "income" : "7000", "upgrade_cost" : "75000", "upgrade_time" : "21600"}, {"name" : "crystal_mine", "level" : "10", "income" : "10000", "upgrade_cost" : "150000", "upgrade_time" : "32400"}, {"name" : "crystal_mine", "level" : "11", "income" : "14000", "upgrade_cost" : "200000", "upgrade_time" : "43200"}, {"name" : "crystal_mine", "level" : "12", "income" : "18000", "upgrade_cost" : "300000", "upgrade_time" : "64800"}, {"name" : "crystal_mine", "level" : "12", "income" : "23000", "upgrade_cost" : "450000", "upgrade_time" : "86400"}, {"name" : "crystal_mine", "level" : "12", "income" : "25000", "upgrade_cost" : "750000", "upgrade_time" : "97200"}]';
-
-gas_mine_data = '[{"name" : "gas_mine", "level" : "1", "income" : "500", "upgrade_cost" : "3000", "upgrade_time" : "5"}, {"name" : "gas_mine", "level" : "2", "income" : "750", "upgrade_cost" : "5000", "upgrade_time" : "30"}, {"name" : "gas_mine", "level" : "3", "income" : "1000", "upgrade_cost" : "10000", "upgrade_time" : "60"}, {"name" : "gas_mine", "level" : "4", "income" : "1500", "upgrade_cost" : "15000", "upgrade_time" : "300"}, {"name" : "gas_mine", "level" : "5", "income" : "2000", "upgrade_cost" : "20000", "upgrade_time" : "900"}, {"name" : "gas_mine", "level" : "6", "income" : "3000", "upgrade_cost" : "25000", "upgrade_time" : "1800"}, {"name" : "gas_mine", "level" : "7", "income" : "4000", "upgrade_cost" : "35000", "upgrade_time" : "3600"}, {"name" : "gas_mine", "level" : "8", "income" : "5500", "upgrade_cost" : "55000", "upgrade_time" : "10800"}, {"name" : "gas_mine", "level" : "9", "income" : "7000", "upgrade_cost" : "75000", "upgrade_time" : "21600"}, {"name" : "gas_mine", "level" : "10", "income" : "10000", "upgrade_cost" : "150000", "upgrade_time" : "32400"}, {"name" : "gas_mine", "level" : "11", "income" : "14000", "upgrade_cost" : "200000", "upgrade_time" : "43200"}, {"name" : "gas_mine", "level" : "12", "income" : "18000", "upgrade_cost" : "300000", "upgrade_time" : "64800"}, {"name" : "gas_mine", "level" : "12", "income" : "23000", "upgrade_cost" : "450000", "upgrade_time" : "86400"}, {"name" : "gas_mine", "level" : "12", "income" : "25000", "upgrade_cost" : "750000", "upgrade_time" : "97200"}]';
+{
+  "building_data": {
+    "metal_mine_data": {
+      "levels": [
+        {
+          "income": "500",
+          "cost": "3000",
+          "time": "5"
+        },
+        {
+          "income": "750",
+          "cost": "5000",
+          "time": "30"
+        },
+        {
+          "income": "1000",
+          "cost": "10000",
+          "time": "60"
+        },
+        {
+          "income": "1500",
+          "cost": "15000",
+          "time": "300"
+        },
+        {
+          "income": "2000",
+          "cost": "20000",
+          "time": "900"
+        },
+        {
+          "income": "3000",
+          "cost": "25000",
+          "time": "1800"
+        },
+        {
+          "income": "4000",
+          "cost": "35000",
+          "time": "3600"
+        },
+        {
+          "income": "5500",
+          "cost": "55000",
+          "time": "10800"
+        },
+        {
+          "income": "7000",
+          "cost": "75000",
+          "time": "21600"
+        },
+        {
+          "income": "10000",
+          "cost": "150000",
+          "time": "32400"
+        },
+        {
+          "income": "14000",
+          "cost": "200000",
+          "time": "43200"
+        },
+        {
+          "income": "18000",
+          "cost": "300000",
+          "time": "64800"
+        },
+        {
+          "income": "23000",
+          "cost": "450000",
+          "time": "86400"
+        },
+        {
+          "income": "25000",
+          "cost": "750000",
+          "time": "97200"
+        }
+      ]
+    },
+    "crystal_mine_data": {
+      "levels": [
+        {
+          "income": "500",
+          "cost": "3000",
+          "time": "5"
+        },
+        {
+          "income": "750",
+          "cost": "5000",
+          "time": "30"
+        },
+        {
+          "income": "1000",
+          "cost": "10000",
+          "time": "60"
+        },
+        {
+          "income": "1500",
+          "cost": "15000",
+          "time": "300"
+        },
+        {
+          "income": "2000",
+          "cost": "20000",
+          "time": "900"
+        },
+        {
+          "income": "3000",
+          "cost": "25000",
+          "time": "1800"
+        },
+        {
+          "income": "4000",
+          "cost": "35000",
+          "time": "3600"
+        },
+        {
+          "income": "5500",
+          "cost": "55000",
+          "time": "10800"
+        },
+        {
+          "income": "7000",
+          "cost": "75000",
+          "time": "21600"
+        },
+        {
+          "income": "10000",
+          "cost": "150000",
+          "time": "32400"
+        },
+        {
+          "income": "14000",
+          "cost": "200000",
+          "time": "43200"
+        },
+        {
+          "income": "18000",
+          "cost": "300000",
+          "time": "64800"
+        },
+        {
+          "income": "23000",
+          "cost": "450000",
+          "time": "86400"
+        },
+        {
+          "income": "25000",
+          "cost": "750000",
+          "time": "97200"
+        }
+      ]
+    },
+    "gas_mine_data": {
+      "levels": [
+        {
+          "income": "500",
+          "cost": "3000",
+          "time": "5"
+        },
+        {
+          "income": "750",
+          "cost": "5000",
+          "time": "30"
+        },
+        {
+          "income": "1000",
+          "cost": "10000",
+          "time": "60"
+        },
+        {
+          "income": "1500",
+          "cost": "15000",
+          "time": "300"
+        },
+        {
+          "income": "2000",
+          "cost": "20000",
+          "time": "900"
+        },
+        {
+          "income": "3000",
+          "cost": "25000",
+          "time": "1800"
+        },
+        {
+          "income": "4000",
+          "cost": "35000",
+          "time": "3600"
+        },
+        {
+          "income": "5500",
+          "cost": "55000",
+          "time": "10800"
+        },
+        {
+          "income": "7000",
+          "cost": "75000",
+          "time": "21600"
+        },
+        {
+          "income": "10000",
+          "cost": "150000",
+          "time": "32400"
+        },
+        {
+          "income": "14000",
+          "cost": "200000",
+          "time": "43200"
+        },
+        {
+          "income": "18000",
+          "cost": "300000",
+          "time": "64800"
+        },
+        {
+          "income": "23000",
+          "cost": "450000",
+          "time": "86400"
+        },
+        {
+          "income": "25000",
+          "cost": "750000",
+          "time": "97200"
+        }
+      ]
+    }
+  }
+}
