@@ -1,4 +1,10 @@
-{
+// ugly hack setting variable = to json
+// remove "var mine_data = " to create valid json syntax
+
+// NOTE:
+// identical copy is kept server sided so server can calculate upgrade cost itself etc...
+// /public_html/spacecorp/structures/building_data/mines.json
+var mine_data = {
   "building_data": {
     "metal_mine_data": {
       "levels": [

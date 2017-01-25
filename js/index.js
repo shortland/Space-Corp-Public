@@ -2,7 +2,7 @@ $(document).ready(function()
 {
 //localStorage.clear();
 //localStorage.setItem("restartTimer", "false");
-/* remove this 8/9/16
+/* remove this 8/9/16 */
     $('#izk').animate({'color' : '#ffffff'}, 2000);
     setTimeout(function()
         {
@@ -24,7 +24,7 @@ $(document).ready(function()
                 // localStorage.setItem('accountNumber1', JSON.stringify({username:'Shortland', level:'57', cash:'4,000,000,000', metal:'16,000,000', crystal:'18,000,000', gas:'26,000,000', gems:'18,000', corporation:'Costco'}));
             }
         }, 2500);
-*/ // remove this 8/9/16
+/* */ // remove this 8/9/16
                   
 });
 
