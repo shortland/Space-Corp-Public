@@ -1,1 +1,5 @@
-rescript tilt.js to set max boundaries along with a reverting point.
+- rescript tilt.js to set max boundaries along with a reverting point.
+- username only allowed a-z, 0-9
+- make it so u can login, not forced to registered each time...
+- I think that refreshing a page that requests cookie_login.pl rapidly doesnt update balance...?
+- remove metal_level, crystal_level, incomes, current balances from the database and integrate them into json into the upgrade_data field.
