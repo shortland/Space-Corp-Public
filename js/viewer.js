@@ -25,7 +25,9 @@ $(document).ready(function()
 	// basically recode main.js >.>
                   
     // edit: 8/9/16 thank you past-self for leaving notes like the above.
-    // won't be working on main.html/.js rn since past self removed that page from beginners, will be working on other stuff, making metal mine give X metal every second based on hourly income without a cron job. Can now do with UNIX based timing methods, previously unknown to self. working on formula in notebook.
+    // won't be working on main.html/.js rn since past self removed that page for beginners, will be working on other stuff, making metal mine give X metal every second based on hourly income without a cron job. Can now do with UNIX based timing methods, previously unknown to self. working on formula in notebook.
+
+    // edit: 1/26/16 I implemented the above back then, though more recently have made buildings u
 
 	// localStorage.setItem('storedPerson', JSON.stringify({firstName:'John', lastName:'Doe', age:'46'}));
 
@@ -33,30 +35,34 @@ $(document).ready(function()
 
 	// alert(person["age"]);
 
-    //document.addEventListener('pause', function() { alert('this alert will show up in the background while your app is paused.')}, false);
-    document.addEventListener('resume', function()
-    {
-        //alert('this alert will show up when you open the app back up.');
+    //
+    document.addEventListener('pause', function() {
         localStorage.setItem("restartTimer", "true");
-    
+    }, false);
+    document.addEventListener('resume', function() {
+        localStorage.setItem("restartTimer", "true");
     }, false);
         
     // gets the data in form of json stored in variable-localstorage "accountNumber1",
+
+    var rushToken = function() {
+        // set and remove that yellow star! if no, remove == html("")
+        // if yes, remove and then set === .html()
+            var account_data = JSON.parse(localStorage.getItem(localStorage.getItem('currentlyPlaying')));
+            alert(JSON.parse(account_data['upgrade_data'])['upgrade_status']['metal_upgrade']);
+            alert(((JSON.parse(account_data['upgrade_data'])['upgrade_time']['metal_time'] - Math.floor(Date.now() / 1000)) / 100).toFixed());
+    };
     
     // gets account data in json, and sets it;
     // gets data on app open, & when app close/reopen
-    (function getDatas()
-    {
-        $.post("http://ilankleiman.com/spacecorp/login/cookie_login.pl",
-        {
+    (function getDatas() {
+        $.post("http://ilankleiman.com/spacecorp/login/cookie_login.pl", {
             method: "login_A",
             nocache: Math.random()
         },
-        function(data,status)
-        {
+        function(data,status) {
             eval(data);
-            if(status == "success")
-            {
+            if(status == "success") {
                 // adds a secondary level to accountNumber1, calling it currentlyPlaying, hence why we use two instances of getItem(getItem(currentlyPlaying))
                 // we could bypass using two getItems if we didn't set it to currentlyPlaying; although we could use multiple accounts set data by doing accountNumber1,2,3,4,5... idk... faster fetching.
                 localStorage.setItem('currentlyPlaying', 'accountNumber1');
@@ -66,20 +72,23 @@ $(document).ready(function()
                 var response_time = parseInt(account_data['nowtime']);
                 var current_time = parseInt(Math.floor(Date.now() / 1000));
                 var overlap_time = Math.abs(response_time - current_time);
-                if(overlap_time > 6)
-                {
+                if(overlap_time > 6) {
                     var ifrm = document.getElementById('myIframe');
                     ifrm = ifrm.contentWindow || ifrm.contentDocument.document || ifrm.contentDocument;
                     ifrm.document.open();
                     ifrm.document.write('<script>alert("Server response time error");<\/script>');
                     ifrm.document.close();
                 }
-                else
-                {
+                else {
+                    if($("body").css("display") == "none") {
+                        $("body").show();
+                    }
                     // wait to show body so that elements can render
-                    $("body").show();
                     console.log("it was: " + overlap_time);
                 }
+
+                // set rush image next to buildings currently building
+                rushToken();
                 
                 $('#usersLevel').html(account_data['level']);
                 $('#usersName').html(account_data['username']);
@@ -113,11 +122,13 @@ $(document).ready(function()
                 $('#gas_balance').html(account_data['gas_balance'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 $('#gas_income').html("+"+account_data['gas_income'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"/hr");
                
-                update_balances();
-               
-                function update_balances()
-                {
-               
+                (function update_balances(start_time) {
+                    var currentTime = Math.floor(Date.now() / 1000);
+                    if((currentTime - start_time) >= 30) {
+                        //alert("big diff");
+                        getDatas();
+                        return;
+                    }
                     var currentCash = parseInt(account_data['cash_balance']*100);
                     var currentCashAsBig = currentCash;
                     var cashIncomeAsBig = ((account_data['cash_income']/60)/60).toFixed(2) * 100;
@@ -146,15 +157,16 @@ $(document).ready(function()
                     account_data['gas_balance'] = newGasBalance;
                     $('#gas_balance').html(Math.round(newGasBalance).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                
-                    if(localStorage.getItem("restartTimer") == "true")
-                    {
+                    if(localStorage.getItem("restartTimer") == "true") {
                         localStorage.setItem("restartTimer", "false");
                         getDatas();
                         return false;
                     }
-               
-                    setTimeout(update_balances, 1000);
-                }
+                    setTimeout(function() {
+                        update_balances(start_time);
+                    }, 1000);
+
+                }(Math.floor(Date.now() / 1000)));
             }
         });
     })();

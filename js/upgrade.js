@@ -14,5 +14,8 @@ function tryUpgradeU(type, name) {
             ifrm.document.write('<script>alert("'+data+'");<\/script>');
             ifrm.document.close();
         });
+
+        // "refresh"
+        getDatas();
     });
 }

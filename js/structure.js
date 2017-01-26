@@ -76,49 +76,81 @@ $(document).ready(function() {
         }*/
         
     // if it's a mine
+
+        var secondsToFormat = function(seconds) {
+            var formattedTime;
+
+            var minutes = seconds / 60;
+            var hours = minutes / 60;
+            var days = hours / 24;
+
+            if(days == 1)
+                formattedTime = "1 Day";
+            else if(days > 1) {
+                var fullDays = days.toString().split(".")[0];
+                var remHours = (days - parseInt(fullDays)) * 24;
+
+                if(parseInt(remHours) == 1) 
+                    var multipleHours = "";
+                else if(parseInt(remHours) > 1)
+                    var multipleHours = "s";
+
+                if(remHours >= 1)
+                    return formattedTime = fullDays + " Days and " + remHours.toString().split(".")[0] + " Hour" + multipleHours;
+                else
+                    return formattedTime = fullDays + " Days";
+            }
+
+            if(hours == 1)
+                formattedTime = "1 Hour";
+            else if(hours > 1) {
+                var fullHours = hours.toString().split(".")[0];
+                var remMinutes = (hours - parseInt(fullHours)) * 60;
+                if(parseInt(remMinutes) == 1) 
+                    var multipleMinutes = "";
+                else if(parseInt(remMinutes) > 1)
+                    var multipleMinutes = "s";
+
+                if(remMinutes >= 1)
+                    return formattedTime = fullHours + " Hours and " + remMinutes.toString().split(".")[0] + " Minute" + multipleMinutes;
+                else
+                    return formattedTime = fullHours + " Hours";
+            }
+
+            if(minutes == 1)
+                formattedTime = "1 Minute";
+            else if(minutes > 1) {
+                var fullMinutes = minutes.toString().split(".")[0];
+                var remSeconds = (minutes - parseInt(fullMinutes)) * 60;
+
+                if(parseInt(remSeconds) == 1) 
+                    var multipleSeconds = "";
+                else if(parseInt(remSeconds) > 1)
+                    var multipleSeconds = "s";
+
+                if(remSeconds >= 1)
+                    return formattedTime = fullMinutes + " Minutes and " + remSeconds.toString().split(".")[0] + " Seconds" + multipleSeconds;
+                else
+                    return formattedTime = fullMinutes + " Minutes";
+            }
+
+            if(seconds == 1)
+                return formattedTime = "1 Second";
+            else if(seconds > 1) {
+                var fullSeconds = seconds.toString().split(".")[0];
+                return formattedTime = fullSeconds + " Seconds";
+            }
+        };
+
+
         if((originalTapID == "metal_mine") || (originalTapID == "gas_mine") || (originalTapID == "crystal_mine")) {
             var buildingIncome = mine_data['building_data'][originalTapID + '_data']['levels'][currentStructureLevel()-1]['income'];
             var nextLevelIncome = mine_data['building_data'][originalTapID + '_data']['levels'][currentStructureLevel()]['income'];
             var structureBuildTimeSeconds = mine_data['building_data'][originalTapID + '_data']['levels'][currentStructureLevel()-1]['time'];
             var upgradeCost = mine_data['building_data'][originalTapID + '_data']['levels'][currentStructureLevel()-1]['cost'];
-        
-            var structureBuildTimeMinutes = structureBuildTimeSeconds / 60;
-            var structureBuildTimeHours = structureBuildTimeMinutes / 60;
-            var structureBuildTimeDays = structureBuildTimeHours / 24;
-
-            if(structureBuildTimeDays == 1) {
-                var structureBuildTime = "1 Day";
-            }
-            if(structureBuildTimeDays >= 1) {
-                var numberOfWholeDays = structureBuildTimeDays.toString().split(".")[0];
-                if(parseInt(numberOfWholeDays) > 1) {
-                    var isItDays = "s";
-                }
-                else {
-                    var isItDays = "";
-                }
-                var andRemainingHours = (structureBuildTimeDays - parseInt(numberOfWholeDays)) * 24;
-                var structureBuildTime = numberOfWholeDays + " Day" + isItDays + " and " + andRemainingHours + " Hours";
-            }
-            if(structureBuildTimeHours <= 23) {
-                var structureBuildTime = structureBuildTimeHours + " Hours";
-            }
-            if(structureBuildTimeHours == 1) {
-                var structureBuildTime = "1 Hour";
-            }
-            if(structureBuildTimeMinutes <= 59) {
-                var structureBuildTime = structureBuildTimeMinutes + " Minutes";
-            }
-            if(structureBuildTimeMinutes == 1) {
-                var structureBuildTime = "1 Minute";
-            }
-            if(structureBuildTimeSeconds <= 59) {
-                var structureBuildTime = structureBuildTimeSeconds + " Seconds";
-            }
-            if(structureBuildTimeSeconds == 1) {
-                var structureBuildTime = "1 Second";
-            }
             
+            var structureBuildTime = secondsToFormat(structureBuildTimeSeconds);
+
             amIaMine = "<br/>Income: " + buildingIncome + "</br></br></br>Level: " + (parseInt(currentStructureLevel()) + 1) + " income: " + nextLevelIncome + "</br>Upgrade cost: " + upgradeCost + "</br>Time to upgrade: " + structureBuildTime;
         }
         else {
@@ -127,7 +159,16 @@ $(document).ready(function() {
         
         $("#displayViewer").show();
         $("#displayViewer").animate({"left" : "5px"}, 500, function() {
-            $("#displayViewer").html("<h3>" + structureName + "</h3><div class='hvr-pulse' id='viewerCloser'></div><br/><br/>Level: " + currentStructureLevel() + amIaMine + "</br><br/><button class='upgrade_building " + originalTapID + "'>Upgrade</button>" + isUpgrading);
+
+            var remUpgradeTime;
+            if(originalTapID.substring(originalTapID.indexOf("_")+1, originalTapID.length) == "mine") {
+                remUpgradeTime = secondsToFormat(JSON.parse(isUpgrading)["upgrade_time"][originalTapID.substring(0, originalTapID.indexOf("_")) + "_time"] - Math.floor(Date.now() / 1000)) + " remaining";
+            }
+            else {
+                remUpgradeTime = "";
+            }
+
+            $("#displayViewer").html("<h3>" + structureName + "</h3><div class='hvr-pulse' id='viewerCloser'></div><br/><br/>Level: " + currentStructureLevel() + amIaMine + "</br><br/><button class='upgrade_building " + originalTapID + "'>Upgrade</button></br>" + remUpgradeTime );
         });
     });
 
