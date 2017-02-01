@@ -1,0 +1,47 @@
+{"building_levels" : 
+	{"metal" : "1", 
+	"crystal" : "1", 
+	"gas" : "1", 
+	"lab" : "1",
+	"cc" : "1",
+	"shipyard" : "1", 
+	"corphq" : "1", 
+	"globalmarket" : "1", 
+	"stockmarket" : "1", 
+	"radar" : "1", 
+	"itemmender" : "1"
+	}
+}
+["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"]
+
+{"upgrade_status" : 
+	{"metal" : "no",
+	"crystal" : "no",
+	"gas" : "no",
+	"lab" : "no",
+	"cc" : "no",
+	"shipyard" : "no",
+	"corphq" : "no",
+	"globalmarket" : "no",
+	"stockmarket" : "no",
+	"radar" : "no",
+	"itemmender" : "no"
+	}
+}
+["no", "no", "no", "no", "no", "no", "no", "no", "no", "no", "no"]
+
+{"upgrade_time" : 
+	{"metal" : "0",
+	"crystal" : "0",
+	"gas" : "0",
+	"lab" : "0",
+	"cc" : "0",
+	"shipyard" : "0",
+	"corphq" : "0",
+	"globalmarket" : "0",
+	"stockmarket" : "0",
+	"radar" : "0",
+	"itemmender" : "0"
+	}
+}
+["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]

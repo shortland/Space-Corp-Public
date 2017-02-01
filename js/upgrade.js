@@ -16,6 +16,36 @@ function tryUpgradeU(type, name) {
         });
 
         // "refresh"
-        getDatas();
+        localStorage.setItem("restartTimer", "true");
+    });
+}
+
+function rushUpgrade(name) {
+    $.post("http://ilankleiman.com/spacecorp/structures/upgrade.pl", {
+        method: "rush",
+        structure: name,
+        nocache: Math.random()
+    },
+    function(data, status) {
+        //eval(data);
+        $(document).ready(function() {
+            var ifrm = document.getElementById('myIframe');
+            ifrm = ifrm.contentWindow || ifrm.contentDocument.document || ifrm.contentDocument;
+            ifrm.document.open();
+            ifrm.document.write('<script>alert("'+data+'");<\/script>');
+            ifrm.document.close();
+
+        });
+
+        // "refresh"
+        if(data.indexOf("!") !== -1) {
+
+        }
+        else {
+            $("#"+name+"_r").hide();
+        }
+        
+        localStorage.setItem("restartTimer", "true");
+        //rushToken();
     });
 }

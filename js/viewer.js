@@ -1,5 +1,4 @@
-$(document).ready(function()
-{
+$(document).ready(function() {
     // iscroll zoom
     /*
     var myScroll;
@@ -48,10 +47,47 @@ $(document).ready(function()
     var rushToken = function() {
         // set and remove that yellow star! if no, remove == html("")
         // if yes, remove and then set === .html()
+            var current_time = (Math.floor(Date.now() / 1000));
             var account_data = JSON.parse(localStorage.getItem(localStorage.getItem('currentlyPlaying')));
-            alert(JSON.parse(account_data['upgrade_data'])['upgrade_status']['metal_upgrade']);
-            alert(((JSON.parse(account_data['upgrade_data'])['upgrade_time']['metal_time'] - Math.floor(Date.now() / 1000)) / 100).toFixed());
+            var buildStatus = JSON.parse(account_data['upgrade_data'])['upgrade_status'];
+            var buildRushCost = JSON.parse(account_data['upgrade_data'])['upgrade_time'];
+            if(buildStatus['metal_upgrade'] == "yes") {
+                if((buildRushCost['metal_time'] - current_time) >= 5) {
+                    $("#metal_token").html("<div class='rushUpgrade' id='metal_r'></div>");
+                }
+            }
+            else {
+                $("#metal_token").html("");
+            }
+            if(buildStatus['crystal_upgrade'] == "yes") {
+                if((buildRushCost['crystal_time'] - current_time) >= 5) {
+                    $("#crystal_token").html("<div class='rushUpgrade' id='crystal_r'></div>");
+                }
+            }
+            else {
+                $("#crystal_token").html("");
+            }
+            if(buildStatus['gas_upgrade'] == "yes") {
+                if((buildRushCost['gas_time'] - current_time) >= 5) {
+                    $("#gas_token").html("<div class='rushUpgrade' id='gas_r'></div>");
+                }
+            }
+            else {
+                $("#gas_token").html("");
+            }
+
+            //$("#viewerContents").delegate(".rushUpgrade", "click", function () {
+                //alert(this.id);
+            //    alert("d");
+                
+            //});
     };
+
+    $("#viewerContents").delegate(".rushUpgrade", "click", function () {
+        var removeR = this.id;
+        removeR = removeR.substring(0, removeR.indexOf("_"));
+        rushUpgrade(removeR);
+    });
     
     // gets account data in json, and sets it;
     // gets data on app open, & when app close/reopen
@@ -61,7 +97,12 @@ $(document).ready(function()
             nocache: Math.random()
         },
         function(data,status) {
-            eval(data);
+            try {
+                eval(data);
+            }
+            catch(err) {
+                alert(err);
+            }
             if(status == "success") {
                 // adds a secondary level to accountNumber1, calling it currentlyPlaying, hence why we use two instances of getItem(getItem(currentlyPlaying))
                 // we could bypass using two getItems if we didn't set it to currentlyPlaying; although we could use multiple accounts set data by doing accountNumber1,2,3,4,5... idk... faster fetching.
@@ -124,7 +165,7 @@ $(document).ready(function()
                
                 (function update_balances(start_time) {
                     var currentTime = Math.floor(Date.now() / 1000);
-                    if((currentTime - start_time) >= 30) {
+                    if((currentTime - start_time) >= 10) {
                         //alert("big diff");
                         getDatas();
                         return;
@@ -164,7 +205,7 @@ $(document).ready(function()
                     }
                     setTimeout(function() {
                         update_balances(start_time);
-                    }, 1000);
+                    }, 6000);
 
                 }(Math.floor(Date.now() / 1000)));
             }
