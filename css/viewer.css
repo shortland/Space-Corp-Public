@@ -366,3 +366,14 @@ body
 {
     color: rgba(26, 83, 255, 1.0);
 }
+
+.structure {
+    background-color: black;
+    width: 100px;
+}
+
+.rushUpgrade {
+    background-color: yellow;
+    width: 35px;
+    height: 35px;
+}
