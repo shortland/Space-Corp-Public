@@ -25,9 +25,9 @@ for($i = 0; $i < @arr.length; $i++) {
 		print "Settings it to false!\n";
 		
 		@arr[$i] = "no";
-		$scal = join(", ", @arr);
 		print "Success!\n\n";
 	}
 }
 
+$scal = join(", ", @arr);
 print $scal . "\n";
