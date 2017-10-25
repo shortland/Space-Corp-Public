@@ -51,10 +51,26 @@ $(document).ready(function() {
                 // set rush image next to buildings currently building
                 rushToken();
                 $("#viewerContents").delegate(".rushUpgrade", "click", function () {
-                    alert("tapped");
-                    var removeR = this.id;
-                    removeR = removeR.substring(0, removeR.indexOf("_"));
-                    rushUpgrade(removeR);
+                    if(localStorage.getItem("rushTap")) {
+                        if(parseInt(localStorage.getItem("rushTap")) >= Math.floor(Date.now() / 1000)) {
+
+                            return;
+                        }
+                        else {
+                            //alert("tapped");
+                            localStorage.setItem("rushTap", Math.floor(Date.now() / 1000));
+                            var removeR = this.id;
+                            removeR = removeR.substring(0, removeR.indexOf("_"));
+                            rushUpgrade(removeR);
+                        }
+                    }
+                    else {
+                        //alert("tapped");
+                        localStorage.setItem("rushTap", Math.floor(Date.now() / 1000));
+                        var removeR = this.id;
+                        removeR = removeR.substring(0, removeR.indexOf("_"));
+                        rushUpgrade(removeR);
+                    }   
                 });
                 
                 $('#usersLevel').html(account_data['user_data']['level']);
@@ -131,7 +147,7 @@ $(document).ready(function() {
                     }
                     setTimeout(function() {
                         update_balances(start_time);
-                    }, 6000);
+                    }, 1000);
 
                 }(Math.floor(Date.now() / 1000)));
             }

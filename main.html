@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery_colors.js"></script>
+        <script type='application/javascript' src='js/fastclick.js'></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
+        <title>Space Corp</title>
+    </head>
+    <body>
+    	<script>$(function(){FastClick.attach(document.body);});</script>
+
+        <div id='mainMenuItems'>
+            <div id='buttonStart'>Start</div>
+
+                <br/><br/>
+
+            <button type='button' id='buttonAccounts'>Accounts<img src='images/editpic.png' class='editpic'/></button>
+                <br/>
+            <div id='selectedAccount'></div>
+                <br/>
+            <button type='button' id='contactSupport'>Contact Support<img src='images/editpic.png' class='editpic'/></button>
+        </div>
+
+        <div id='accountList'>
+            <div id='accountListHeader'>Accounts</div><div id='accountListClose' class='closeButton'>X</div>
+
+            <iframe id='accountFrame' src='accounts.html' frameborder='0px'></iframe>
+
+            <div id='accountAddAnother'>Add Account</div>
+        </div>
+        <!-- null -->
+        <div id='frameOpener'></div>
+    </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <script>data = "hello worldy";</script>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery_colors.js"></script>
+        <script type='application/javascript' src='js/fastclick.js'></script>
+        <script type="text/javascript" src="js/typed.js"></script>
+        <iframe id="myIframe" style="display:none;"></iframe>
+        <script type="text/javascript">
+        function popup()
+        {
+            var ifrm = document.getElementById('myIframe');
+            ifrm = ifrm.contentWindow || ifrm.contentDocument.document || ifrm.contentDocument;
+            ifrm.document.open();
+            ifrm.document.write('<script>alert(localStorage.getItem("errorForPop"));<\/script>');
+            ifrm.document.close();
+            if(localStorage.getItem("errorForPop") == "Successfully registered")
+            {
+                window.location.href = 'viewer.html';
+            }
+        }
+        </script>
+        <script type="text/javascript" src="js/hello_commander.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="css/hello_commander.css" />
+        <title>Space Corp</title>
+    </head>
+    <body>
+    	<script>$(function(){FastClick.attach(document.body);});</script>
+        <script src="jquery.js"></script>
+        <script src="typed.js"></script>
+        <script>
+            $(function()
+            {
+                $("#messageBoxPadder").typed(
+                {
+                    strings: ["Greetings Commander! Please choose a username and password. <br/>Username: <input type='text' placeholder='username' id='setUsername' maxlength='20' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'/> <br/><br/>Password: &nbsp;<input type='password' placeholder='password' id='setPassword' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'/>"],
+                    /*  ^400 <br><br>Much has changed while you've been away.^400 <br>I'll show you back to your^200. . .    ^200. . .^300   . . .<br><br>^200It appears we're under attack!^300 Prepare yourself commander! */
+                    typeSpeed: 0,
+                    callback: function() {$('#submitUsername').css({'top' : $('.messageBox').height() + ($(window).height() * .05) + 40}); $('#submitUsername').fadeIn('fast');},
+                    showCursor: false
+                });
+            });
+        </script>
+
+        <div class='messageBox'>
+            <div id='speakerSpeech'><img src='images/qmark.png' width='38px' height='50px'/><br/>&nbsp;&nbsp;&nbsp;&nbsp;<span id='speakerName'>Julie:</span></div>
+            <div id='messageBoxPadder'></div>
+        </div>
+        <span id='addExtraHere'></span>
+        <button type='button' id='submitUsername'>Continue <!--<img src='images/launchpic.png' class='launchPicture' />--></button>
+        
+        <button type='button' id='alreadyRegistered' onClick="window.location.href='main.html'">Already Registered <!--<img src='images/launchpic.png' class='launchPicture' />--></button>
+
+        <div class='errorBox'></div>
+
+    </body>
+</html>

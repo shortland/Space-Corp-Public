@@ -96,13 +96,15 @@ $(document).ready(function() {
             method: "login_A",
             nocache: Math.random()
         },
-        function(data,status) {
+        );function(data,status) {
             try {
+                //alert("trying to eval");
                 eval(data);
             }
             catch(err) {
                 alert(err);
             }
+            //alert(status + " was status");
             if(status == "success") {
                 // adds a secondary level to accountNumber1, calling it currentlyPlaying, hence why we use two instances of getItem(getItem(currentlyPlaying))
                 // we could bypass using two getItems if we didn't set it to currentlyPlaying; although we could use multiple accounts set data by doing accountNumber1,2,3,4,5... idk... faster fetching.
@@ -209,7 +211,7 @@ $(document).ready(function() {
 
                 }(Math.floor(Date.now() / 1000)));
             }
-        });
+        }
     })();
 
 });

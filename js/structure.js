@@ -42,27 +42,27 @@ $(document).ready(function() {
     // structure level
         function currentStructureLevel() {
             if(originalTapID == "command_center")
-                return account_data['cc_level'];
+                return account_data['building_level_data']['cc'];
             else if(originalTapID == "tech_lab")
-                return account_data['lab_level'];
+                return account_data['building_level_data']['lab'];
             else if(originalTapID == "ship_yard")
-                return account_data['shipyard_level'];
+                return account_data['building_level_data']['shipyard'];
             else if(originalTapID == "corporation_hq")
-                return account_data['corphq_level'];
+                return account_data['building_level_data']['corphq'];
             else if(originalTapID == "global_market")
-                return account_data['globalmarket_level'];
+                return account_data['building_level_data']['globalmarket'];
             else if(originalTapID == "stock_market")
-                return account_data['stockmarket_level'];
+                return account_data['building_level_data']['stockmarket'];
             else if(originalTapID == "metal_mine")
-                return account_data['metal_level'];
+                return account_data['building_level_data']['metal'];
             else if(originalTapID == "crystal_mine")
-                return account_data['crystal_level'];
+                return account_data['building_level_data']['crystal'];
             else if(originalTapID == "gas_mine")
-                return account_data['gas_level'];
+                return account_data['building_level_data']['gas'];
             else if(originalTapID == "radar_station")
-                return account_data['radar_level'];
+                return account_data['building_level_data']['radar'];
             else if(originalTapID == "item_mender")
-                return account_data['itemmender_level'];
+                return account_data['building_level_data']['itemmender'];
         }
     
     // mines incomes (we're getting from server, but theoretically we could get from json too)
@@ -162,7 +162,7 @@ $(document).ready(function() {
 
             var remUpgradeTime;
             if(originalTapID.substring(originalTapID.indexOf("_")+1, originalTapID.length) == "mine") {
-                remUpgradeTime = secondsToFormat(JSON.parse(isUpgrading)["upgrade_time"][originalTapID.substring(0, originalTapID.indexOf("_")) + "_time"] - Math.floor(Date.now() / 1000)) + " remaining";
+                remUpgradeTime = secondsToFormat(account_data["upgrade_time_data"][originalTapID.substring(0, originalTapID.indexOf("_"))] - Math.floor(Date.now() / 1000)) + " remaining";
             }
             else {
                 remUpgradeTime = "";

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
+        <!--target-densitydpi=device-dpi-->
+        <script type="text/javascript" src="cordova.js"></script>
+        <link href="css/font-awesome.css" rel="stylesheet" media="all"/>
+        <script type="text/javascript" src="js/iscroll_zoom.js"></script>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery_colors.js"></script>
+        <script type='application/javascript' src='js/fastclick.js'></script>
+        <iframe id='myIframe' style='display:none;'></iframe>
+        <script type="text/javascript" src="js/resources/structures.json"></script>
+        <script type="text/javascript" src="js/upgrade.js"></script>
+        <script type="text/javascript" src="js/structure.js"></script>
+        <script type="text/javascript" src="js/rush_token.js"></script>
+        <script type="text/javascript" src="js/viewer2.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/hover.css" />
+        <link rel="stylesheet" type="text/css" href="css/viewer.css" />
+
+        <title>Space Corp</title>
+    </head>
+    <body>
+    	<script>$(function(){FastClick.attach(document.body);});</script>
+        <script>function tryUpgrade(x, y){tryUpgradeU(x, y);}</script>
+        
+
+        <div id='background_bg'></div>
+
+        <div id='content'>
+            <!-- top menu -->
+            <div id='top_menu'>
+                <div id='topTabOne'><span id='tbwidth'><center>( <span id='usersLevel'>0</span> )</center></span><div id='tbovermove'><span id='usersName'></span><span id='usersPower'>Power:&nbsp;</span></div></div><div id='topTabTwo'><div id='mySystemName'></div><div id='myCoords'></div></div><div id='topTabThree'><center><img src='images/qmark.png' /></center></div><div id='topTabThreeLap'><center><span id='usersGem'></span></center></div>
+            </div>
+            <div id='top_lower_menu'>
+                <div class='inline'><img src='images/qmark.png' /><span id='metal_balance' class='balance'></span><br/><span id='metal_income' class='income'></span></div><div class='inline'><img src='images/qmark.png' /><span id='crystal_balance' class='balance'></span><br/><span id='crystal_income' class='income'></span></div><div class='inline'><img src='images/qmark.png' /><span id='gas_balance' class='balance'></span><br/><span id='gas_income' class='income'></span></div><div class='inline'><img src='images/qmark.png' /><span id='cash_balance' class='balance'></span><br/><span id='cash_income' class='income'></span></div>
+            </div>
+            
+            <div id='displayViewer'></div>
+            
+            <div id='viewerContents'> <!-- actual contents,  -->
+            <!--
+             this block is from
+             8/9/16
+             corporation HQ is upgradeable, level contributes to corp power level.
+             
+             4 people in corp,
+             
+             player a: level 5 hq,
+             b: level 4 hq,
+             c: level 8 hq,
+             d: level 12 hq,
+             
+             total: 29 corp power;
+             higher corp power unlocks ability to purchase corp power ups; such as increase metal income by 10% (will give bonus to everyone in corp) etc. purchaseable with corp "bank balance", can have a set tax on everyone; set it to 5% or whatever. Only leader can change it with 50%+ of co-leaders agreeing to tax.
+             
+             have a max tax of 5%? corp that is 14+ days old can set it to 10% etc. need to have a good cache method to prevent bot created accounts; 
+             
+             no ip blocking based on account creation, must have a good crypted anti bot create account method ;) JS create and backend create hash equivalency.
+             -->
+
+            <!--
+                ___________________________________________________
+                ( 58 ) Shortland   | Kepler 51b  |  10,000  \   /
+                Power: 64,000      | (251, 322)  | Get Gems  \ /
+                ___________________________________________________
+                +<metal>+ 2000 / +<crystal>+ 200 / +<gas>+ 240 / +<cash>+ 240
+                ___________________________________________________
+                <time here>/
+                ___________
+
+                ___________
+                +<map here>+
+                ___________
+            -->
+
+            <!-- metal, crystal, gas, cash, / gems-->
+            <!-- left(map) click to view system, then when at system, click to view galaxy -->
+            <!-- right(mai) -->
+
+            <!-- chat at bottom above the menu buttons-->
+            <!-- base here -->
+            <br/><br/><br/><br/>
+
+            <!-- level 1 cc allows other buildings to be only level1, level 2 cc allows others to be level 2, etc.-->
+            
+            <div id='command_center' class='structure s0'><!--
+             --><img src='images/qmark.png' /><!--
+             -->Command Center<!--
+             --><div class='s0' id='cc_level'></div><!--
+         --></div>
+
+            <!-- research fracking = increase in gas production -->
+            <!-- research mining = increase in metal production -->
+
+            <!-- research welding = decrease in ship production time and building upgrade time -->
+            <!-- research structural engineering = decrease in ship prod and building upgrade time -->
+
+            <!-- only available with a level 10 tech lab -->
+            <!-- research blueprinting = ability to combine 2 weapons together (2 level 1 items -> 2 level 2 items -> 2 level 3...)-->
+            
+            <!-- research precision instruments -> increase loot rate when sending into blackhole -->
+            <div id='tech_lab' class='structure'><img src='images/qmark.png' />Tech Lab<div id='lab_level'></div></div>
+                <br/><br/><br/><br/>
+            <!-- Ship Yard -> build ships -->
+            <div id='ship_yard' class='structure'><img src='images/qmark.png' />Ship Yard<div id='shipyard_level'></div></div>
+
+            <!-- view corporation information here, corp items, corp bank, corp tax on each member %, corp members, corp info page, corp apply page, corp stock info/data page -->
+            <div id='corporation_hq' class='structure'><img src='images/qmark.png' />Corporation HQ<div id='HQ_level'></div></div>
+                <br/><br/><br/><br/>
+            <!-- buy and sell metal/gas for cash -> and eventually buy & sell blueprints -->
+            <div id='global_market' class='structure'><img src='images/qmark.png' />Global Market<div id='market_level'></div></div>
+
+            <!-- buy and sell stocks -->
+            <div id='stock_market' class='structure'><img src='images/qmark.png' />Stock Market<div id='stock_level'></div></div>
+
+            <!-- mine metal -->
+            <div id='metal_mine' class='structure'><img src='images/qmark.png' />Metal Mine<div id='metalMine_level'></div></div><div id='metal_token'></div>
+                <br/><br/><br/><br/>
+            <!-- Crystal mine -->
+            <div id='crystal_mine' class='structure'><img src='images/qmark.png' />Cystal Mine<div id='crystalMine_level'></div></div><div id='crystal_token'></div>
+
+            <!-- mine gas -->
+            <div id='gas_mine' class='structure'><img src='images/qmark.png' />Gas Mine<div id='gasFracker_level'></div></div><div id='gas_token'></div>
+                <br/><br/><br/><br/>
+            <!-- detects incoming attacks -->
+            <div id='radar_station' class='structure'><img src='images/qmark.png' />Radar Station<div id='radar_level'></div></div>
+
+            <!-- Item Mender -> use blueprints to make item. once created item, blueprint is essentially "used/depleted" -->
+            <div id='item_mender' class='structure'><img src='images/qmark.png' />Item Mender<div id='itemMender_level'></div></div>
+            
+            <br/><br/><br/><br/>
+    
+            </div> <!-- /actual contents end -->
+        </div> <!--contents end, includes top resources etc -->
+
+        <!-- 
+        -== Tabs ==-
+        - Base
+        - Fleet (shows ships owned)
+        - 
+        - Corporation (opens menu for corporation, in corp menu-> tab for corp items (extra production of meta/gas/money/item that gives each alliance member "Fusion Cores(speed ups)" + 1 every <<hour>> or something))
+        - Stocks
+        - >>>>  
+        - >>>> mail won't be a tab -> be a button on top right of screen
+        -->
+        <div id='bottomStyleBar'>
+            <!--<div id='tabOverTop'></div>-->
+            <div id='tabOne' class='bottomTab'><div class='insideBorders'><img src='images/qmark.png' /><div class='textPos'>Base</div></div></div> <!-- View main planet/base -->
+                <!--<div class='tabSpacer' id='spaceOne2Two'>2</div>-->
+            <div id='tabTwo' class='bottomTab'><div class='insideBorders'><img src='images/qmark.png' /><div class='textPos'>Fleet</div></div></div> <!-- train ships, send ships on voyage -->
+                 <!--<div class='tabSpacer' id='spaceTwo2Three'></div>-->
+            <div id='tabThree' class='bottomTab'><div class='insideBorders'><img src='images/qmark.png' /><div class='textPos'>Corp.</div></div></div> <!-- view corp you're in, corpbank, corpstock, corpitem -->
+                 <!--<div class='tabSpacer' id='spaceThree2Four'></div>-->
+            <div id='tabFour' class='bottomTab'><div class='insideBorders'><img src='images/qmark.png' /><div class='textPos'>Market</div></div></div> <!-- buy, sell items, parts, crafteditems -->
+                 <!--<div class='tabSpacer' id='spaceFour2Five'></div>-->
+            <div id='tabFive' class='bottomTab'><div class='insideBorders'><img src='images/qmark.png' /><div class='textPos'>Stocks</div></div></div> <!-- buy, sell stocks -->
+                 <!--<div class='tabSpacer' id='spaceFive2Six'></div>-->
+            <div id='tabSix' class='bottomTab'><div class='insideBorders'><img src='images/qmark.png' /><div class='textPos'>More</div></div></div>
+        </div>
+    </body>
+</html>

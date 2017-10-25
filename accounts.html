@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery_colors.js"></script>
+        <script type='application/javascript' src='js/fastclick.js'></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <!--<link rel="stylesheet" type="text/css" href="css/main.css" />-->
+        <title>Space Corp</title>
+    </head>
+    <body>
+        <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800);
+
+        * 
+        {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            font-family: 'Open Sans', sans-serif;
+            -webkit-appearance: none;
+            -mox-appearance: none;
+            -o-appearance: none;
+            -ms-appearance: none;
+            color: #FFFFFF;
+        }
+
+        body 
+        {
+            -webkit-touch-callout: none;
+            -webkit-text-size-adjust: none;
+            -webkit-user-select: none;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .listedAccount
+        {
+            position: relative;
+            line-height: 30px;
+            width: 90%;
+            height: 30px;
+            text-align: left;
+            font-weight: 300;
+            color: #FFFFFF;
+            border-radius: 0px;
+            border: 1px solid rgba(44, 123, 204, 0.5);
+            background: -webkit-radial-gradient(rgba(0, 31, 122, 0.2), rgba(0, 31, 122, 0.8));
+            background: -o-radial-gradient(rgba(0, 31, 122, 0.2), rgba(0, 31, 122, 0.8));
+            background: -moz-radial-gradient(rgba(0, 31, 122, 0.2), rgba(0, 31, 122, 0.8));
+            background: radial-gradient(rgba(0, 31, 122, 0.2), rgba(0, 31, 122, 0.8));
+        }
+
+        .listedAccount:hover
+        {
+            background: -webkit-radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+            background: -o-radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+            background: -moz-radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+            background: radial-gradient(rgba(51, 173, 255, 0.1), rgba(51, 173, 255, 0.4));
+        }
+        
+        .launchPicture
+        {
+            height: 19px;
+            width: 19px;
+            position: absolute;
+            margin-top: 6px;
+            right: 10px;
+        }
+        </style>
+    	<script>$(function(){FastClick.attach(document.body);});</script>
+        <center><br/><div id='accountsOutput'></div></center>
+    </body>
+</html>
