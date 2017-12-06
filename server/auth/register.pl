@@ -1,31 +1,40 @@
 #!/usr/bin/perl
 
-#typical
+
 use strict;
 use warnings;
-#personal
+
+use CGI;
+use CGI::Cookie;
+use CGI::Carp qw(fatalsToBrowser);
+
 use File::Basename qw(dirname);
 use Cwd qw(abs_path);
 use lib dirname(dirname abs_path $0) . '/';
 use Spacecorp::Regex qw(isCharNum isPosIntNotBin);
 use Spacecorp::SystemNamer qw(random_system);
 use Spacecorp::ErrorRecorder qw(record_error);
-#general
-use CGI;
-use CGI::Cookie;
-use CGI::Carp qw(fatalsToBrowser);
+
 use JSON;
 use YAML::XS 'LoadFile';
 use DBI;
 use String::Random;
 use Crypt::PBKDF2;
+use Path::Tiny;
 #use Plack::Middleware::CrossOrigin;
 
-# send me an email or some alert stating the max (100) collisions has occured... I don't think it's 100% possible but we'll see, i didn't really work too hard on the algo to create coords...
-# I don't think 100+ collisions 
-# sub maxCollisionsWithCoordinates {
-#     print "o shit";
-# }
+# inserts the default json values for userResources
+# we can get the next level cost from mainFile based off of current level building
+# we can get building income based off of level
+sub insertDefaultData {
+    my ($idn, $DBH) = @_;
+    my $bLevels = path("default/bLevels.json")->slurp or return 0;
+    my $bRemaining = path("default/bRemaining.json")->slurp or return 0;
+    my $resources = path("default/resources.json")->slurp or return 0;
+    my $sth = $DBH->prepare("INSERT INTO userResources (IDN, buildingLevels, buildingRemaining, resources) VALUES (?, ?, ?, ?)");
+    $sth->execute($idn, $bLevels, $bRemaining, $resources) or return 0;
+    return 1;
+}
 
 # append the coordinates to the user, or if validation failed, attempt to create new random coordinates up to 100 times.
 sub registerCoordinates {
@@ -47,8 +56,9 @@ sub registerCoordinates {
         }
     }
     else {
-        my $sth = $DBH->prepare("update user SET system_x = ?, system_y = ?, collisions = ? WHERE IDN = ?");
+        my $sth = $DBH->prepare("UPDATE user SET system_x = ?, system_y = ?, collisions = ? WHERE IDN = ?");
         $sth->execute($sysX, $sysY, $attempts, $idn) or return 0;
+        return 1;
     }
 }
 
@@ -67,17 +77,9 @@ sub validateCoordinates {
 sub createCoordinates {
     my ($idn, $attempts, $DBH) = @_;
     my $rand = rand();
-    # if ($rand >= 0.5) {
     my $sysX = (int(rand(1000000)) + 1);
     my $sysY = (int(rand(1000000)) + 1);
-    registerCoordinates($idn, ++$attempts, $sysX, $sysY, $DBH);
-    # }
-    # else {
-    #     # exponential model with linear correlation
-    #     my $sysX = (int(rand(1000)) + 1) * $idn;
-    #     my $sysY = (int(rand(100)) + 1) * $idn;
-    #     registerCoordinates($idn, ++$attempts, $sysX, $sysY, $DBH);
-    # }
+    return registerCoordinates($idn, ++$attempts, $sysX, $sysY, $DBH);
 }
 
 # returns header to print, accepts type as argument to print. "json", "text", "text/html"
@@ -151,8 +153,11 @@ sub userExists {
 
 # create $dbh handler
 sub createDBH {
-    my ($SQLUSER, $SQLPASS) = @_;
-    return DBI->connect("DBI:mysql:database=spacecorp;host=localhost", $SQLUSER, $SQLPASS, {'RaiseError' => 1});
+    my ($SQLUSER, $SQLPASS, $DATABASE) = @_;
+    if (!defined $DATABASE) {
+        $DATABASE = "spacecorp";
+    }
+    return DBI->connect("DBI:mysql:database=$DATABASE;host=localhost", $SQLUSER, $SQLPASS, {'RaiseError' => 1});
 }
 
 # check is username and password are valid parameters
@@ -231,10 +236,16 @@ BEGIN {
             $info{LINE} = __LINE__; $info{NORM} = 'false'; record_error(%info);
         }
         else {
-            print encode_json {error => JSON::false, response => "successfully registered"};
+            if (insertDefaultData($userIDN, $DBH)) {
+                print encode_json {error => JSON::false, response => "successfully registered"};
+            }
+            else {
+                print encode_json {error => JSON::true, response => "unable to initialize user resources"};
+                $info{LINE} = __LINE__; $info{NORM} = 'false'; record_error(%info);
+            }
         }
     }
-
+    
     open(STDERR, ">&STDOUT");
 }
 
