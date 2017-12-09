@@ -29,8 +29,8 @@ sub insertDefaultData {
     my $bLevels = path("default/bLevels.json")->slurp or return 0;
     my $bRemaining = path("default/bRemaining.json")->slurp or return 0;
     my $resources = path("default/resources.json")->slurp or return 0;
-    my $sth = $DBH->prepare("INSERT INTO userResources (IDN, buildingLevels, buildingRemaining, resources) VALUES (?, ?, ?, ?)");
-    $sth->execute($idn, $bLevels, $bRemaining, $resources) or return 0;
+    my $sth = $DBH->prepare("INSERT INTO userResources (IDN, buildingLevels, buildingRemaining, resources, levelsTime, resourcesTime, remainingTime, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $sth->execute($idn, $bLevels, $bRemaining, $resources, time(), time(), time(), time()) or return 0;
     return 1;
 }
 
@@ -121,8 +121,8 @@ sub logger {
     my (%info);
     $info{PAGE_NAME} = $0;
     $info{REFERER} = defined $ENV{HTTP_REFERER} ? $ENV{HTTP_REFERER} : 'NONE';
-    $info{U_COOKIE} = $cgi->cookie('uCookie');
-    $info{P_COOKIE} = $cgi->cookie('pCookie');
+    $info{U_COOKIE} = defined $cgi->cookie('uCookie') ? $cgi->cookie('uCookie') : 'NONE';
+    $info{P_COOKIE} = defined $cgi->cookie('pCookie') ? $cgi->cookie('pCookie') : 'NONE';
     $info{LINE} = $params[0]; 
     $info{NORM} = $params[1]; 
     $info{SEVERITY} = $params[2];

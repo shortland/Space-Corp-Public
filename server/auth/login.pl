@@ -19,7 +19,6 @@ BEGIN {
     my $pass = $cgi->param('p');
     #sql user and pass from YAML
     my $DBH = createDBH();
-
     #check if the user&pass are valid and whether the username exists
     if (isNotValidDetails($user, $pass) || !userExists($user, $DBH) || !isUserPasswordValid(getUserHash($user, $DBH), $pass)) {
         print $cgi->header(-type => "application/json");
@@ -31,7 +30,7 @@ BEGIN {
         updateDBCookies($user, $newCookies[0], $newCookies[1], $DBH);
         setCookiesEIE($newCookies[0], $newCookies[1]);
         print $cgi->header(-type => "application/json");
-        print encode_json {error => JSON::false, response => "logged in, now need to set cookies"};
+        print encode_json {error => JSON::false, response => "successfully logged in"};
         exit;
     }
 

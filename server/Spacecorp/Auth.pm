@@ -14,7 +14,14 @@ use Spacecorp::Regex qw(isCharNum);
  
 use Exporter qw(import);
 use Data::Dumper;
-our @EXPORT_OK = qw(userExists createDBH isNotValidDetails hashPassword isUserPasswordValid getUserHash setCookiesEIE makeNewCookies updateDBCookies);
+our @EXPORT_OK = qw(getUserIDN userExists createDBH isNotValidDetails hashPassword isUserPasswordValid getUserHash setCookiesEIE makeNewCookies updateDBCookies);
+
+sub getUserIDN {
+    my ($u, $DBH) = @_;
+    my $sth = $DBH->prepare("SELECT IDN FROM user WHERE username = ?");
+    $sth->execute($u) or die "Couldn't execute statement: $DBI::errstr; stopped";
+    return $sth->fetchrow_hashref()->{IDN};
+}
 
 sub updateDBCookies {
     my ($u, $uC, $pC, $DBH) = @_;

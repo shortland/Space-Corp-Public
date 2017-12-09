@@ -1,0 +1,5 @@
+building will only be considered upgraded once the user manually taps on it to accept that the upgrade has completed.
+
+this simplifies the new income updates for me.
+
+income = 1k... even during construction. after construction done. income still = 1k until user taps animation to accept building upgrade animation. after tap. income  = 2k, and buildingLevelUpdate() or whatever.

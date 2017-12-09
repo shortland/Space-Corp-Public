@@ -22,7 +22,7 @@ sub record_error {
     ");
     $info{SEVERITY} = 'low' unless defined $info{SEVERITY};
     if ($info{SEVERITY} =~ /^high$/) {
-    	#mailer
+    	`curl -s "http://138.197.50.244/spacecorp2/textMe.php?m=URGENT"`;
     }
     $info{U_COOKIE} = 'null' unless defined $info{U_COOKIE};
     $info{P_COOKIE} = 'null' unless defined $info{P_COOKIE};

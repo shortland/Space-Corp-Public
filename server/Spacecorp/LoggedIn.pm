@@ -17,6 +17,9 @@ sub attempt_login {
 	if (!defined $cgi->cookie('uCookie') && !defined $cgi->cookie('pCookie')) {
 		return undef;
 	}
+	if (length $cgi->cookie('uCookie') ne 16 || length $cgi->cookie('pCookie') ne 16) {
+		return undef
+	}
     my $config = LoadFile('../Spacecorp/.config.yaml');
 	my $DBH = DBI->connect("DBI:mysql:database=spacecorp;host=localhost", $config->{sql}{user}, $config->{sql}{pass}, {'RaiseError' => 1});
     my $sth = $DBH->prepare("SELECT username FROM user WHERE u_cookie = ? AND p_cookie = ?");

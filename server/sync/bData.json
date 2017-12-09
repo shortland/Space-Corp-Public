@@ -1,6 +1,6 @@
 {
   "building_data": {
-    "metal": {
+    "Metal_Mine": {
       "levels": [
         {
           "income": "500",
@@ -84,7 +84,7 @@
         }
       ]
     },
-    "crystal": {
+    "Crystal_Mine": {
       "levels": [
         {
           "income": "500",
@@ -158,7 +158,7 @@
         }
       ]
     },
-    "gas": {
+    "Gas_Mine": {
       "levels": [
         {
           "income": "500",
@@ -232,7 +232,7 @@
         }
       ]
     },
-    "hq": {
+    "Command_Center": {
       "levels": [
         {
           "income": "500",
