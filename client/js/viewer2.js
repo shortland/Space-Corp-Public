@@ -12,8 +12,9 @@ $(document).ready(function() {
     }, false);
 
     (function getDatas() {
-        $.post("http://ilankleiman.com/spacecorp/login/cookie_login.pl", {
+        $.post("http://ilankleiman.com/spacecorp2/auth/legacyClientWrapper.pl", {
             method: "login_A",
+            bet: "viewer2",
             nocache: Math.random()
         },
         function(data,status) {
