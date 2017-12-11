@@ -39,5 +39,5 @@ BEGIN {
     # print getAll(getUserIDN(attempt_login()->{username}, $DBH), $DBH);
 
     #updates and shows resources & UPDATES a specific resource type ie having spent it on something.
-    changeResAmt(getUserIDN(attempt_login()->{username}, $DBH), $DBH, $cgi->param('res'), $cgi->param('amt'));
+    print changeResAmt(getUserIDN(attempt_login()->{username}, $DBH), $DBH, $cgi->param('res'), $cgi->param('amt'));
 }

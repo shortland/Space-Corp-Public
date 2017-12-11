@@ -79,24 +79,15 @@ sub updateResT {
     return 1;
 }
 
-# IT IS ASSUMED THAT $AMT IS NEGATIVE INT IF THIS FUNCTION IS BEING CALLED.
+# IT was ASSUMED THAT $AMT IS NEGATIVE INT IF THIS FUNCTION IS BEING CALLED.
+# same purpose but uses getUsersRestAmt instead of its own foreach and key/value checking system.
+#retuns FALSE, IF YOU HAVE ENOUGH
+#returns TRUE/NUMBER, if you dont. the number it returns is the amount u need. (difference)
 sub hasEnough {
     my ($idn, $DBH, $res, $amt) = @_;
-    # updates resources so lets run this
-    getAll($idn, $DBH);
-    # then... see if we have enough of it
-    my $sth = $DBH->prepare("SELECT resources FROM userResources WHERE IDN = ?");
-    $sth->execute($idn) or return 0;
-    my $resCol = decode_json $sth->fetchrow_hashref()->{resources};
-    my $hasAmt;
-    foreach my $resource (@{$resCol->{resources}}) {
-        if ((keys $resource)[0] =~ /^$res$/) {
-            $hasAmt = (values $resource)[0];
-        }
-    }
-    my $nonnegAmt = $amt =~ s/-//gmr; #/
-    if (($hasAmt - $nonnegAmt) < 0) {
-        return ($hasAmt - $nonnegAmt);
+    my $myAmt = getUsersResAmt($idn, $DBH, $res);
+    if (($myAmt - substr($amt, 1)) < 0) {
+        return ($myAmt - substr($amt, 1));
     }
     else {
         return 0;
@@ -124,44 +115,38 @@ sub getUsersResAmt {
 # adds or subtracts depends on whether $amt is pos or neg
 sub updateResAmt {
     my ($idn, $DBH, $res, $amt) = @_;
-
-
-    # OK SO I CANT DO THIS AND CALL getUsersResAmt,
-    # CANNOT...
-    # BECAUSE.
-    # resources contains a JSON Obj.
-    # and I need that object PLUS update the res... bla so
-    # just get the raw obj from DB 
-    # first getAll().
-    # then get raw obj from DB.
-    # then loop thru keys until $res = $fromObjRes
-    # values[0] += $amt if POSITIVE -= $amt if NEGATIVE
-
-    # my $sth = $DBH->prepare("UPDATE userResources SET resources = ? ");
-    # $sth->execute($idn) or return 0;
+    my $resData = decode_json getAll($idn, $DBH);
+    foreach my $resource (@{$resData->{resources}}) {
+        if ((keys $resource)[0] =~ /^$res$/) {
+            # ie: if $amt is negative. += $amt => +-= $amt => -= |$amt|
+            $resource->{(keys $resource)[0]} += $amt; # works for pos and negative.
+        }
+    }
+    my $sth = $DBH->prepare("UPDATE userResources SET resources = ? WHERE IDN = ?");
+    $sth->execute(encode_json $resData, $idn) or return 0;
+    return $resData;
 }
 
 sub changeResAmt {
     my ($idn, $DBH, $res, $amt) = @_;
     #check to see if amt is a number. (integer preferably)
     if(!isInt($amt)) {
-        print $amt . " isn't an int";
+        return encode_json {error => JSON::true, response => $amt . " isn't an int"};
         exit;
     }
-    print getUsersResAmt($idn, $DBH, $res);
     #check to see if we have enough of the resource before subtracting it from our bal.
     if ($amt < 0) {
         #only call this function if $amt is negative.
         if (hasEnough($idn, $DBH, $res, $amt)) {
-            print "You need " . hasEnough($idn, $DBH, $res, $amt) =~ s/-//r . " more \n"; #/
+            return encode_json {error => JSON::true, response => "You need " . hasEnough($idn, $DBH, $res, $amt) =~ s/-//r . " more"};#/
             exit;
         }
         # we have enough of the resource & want to take $amt away from current bal.
-        updateResAmt($idn, $DBH, $res, $amt);
+        return encode_json updateResAmt($idn, $DBH, $res, $amt);
     }
     else {
         # we are adding a resource.
-        updateResAmt($idn, $DBH, $res, $amt);
+        return encode_json  updateResAmt($idn, $DBH, $res, $amt);
     }
 }
 
