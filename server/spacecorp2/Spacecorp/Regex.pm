@@ -7,7 +7,7 @@ use Spacecorp::ErrorRecorder;
  
 use Exporter qw(import);
  
-our @EXPORT_OK = qw(isCharNum isPosInt isPosIntLeast2 isPosIntNotBin isCharNumSpecials);
+our @EXPORT_OK = qw(isCharNum isPosInt isPosIntLeast2 isPosIntNotBin isCharNumSpecials isInt);
 
 sub isPosIntNotBin {
 	my ($n) = @_;
@@ -70,6 +70,19 @@ sub isCharNumSpecials {
 		return 0;
 	}
 	elsif ($n =~ /^\w+$/) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+sub isInt {
+	my ($n) = @_;
+	if (!defined $n) {
+		return 0;
+	}
+	elsif ($n =~ /^-?[1-9]\d*$/) {
 		return 1;
 	}
 	else {

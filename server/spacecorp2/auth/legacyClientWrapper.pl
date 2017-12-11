@@ -1,5 +1,11 @@
 #!/usr/bin/perl
 
+# this is some really bad bad stuff here, it's just temporary until I redo the client
+# make sure the same userName exists in both `user` and `users` table
+# make sure the cookies are the same!!!!!!!!!
+# make sure the client has cookies set already. if it doesnt... somethings gonna break probly
+# copy cookies from `users` to `user`.
+
 use strict;
 use warnings;
 
@@ -37,7 +43,7 @@ BEGIN {
     }
 
     my %tempHash = (
-        nowtime => time,
+        nowtime => time(),
         user_data => {
             username => "shortland",
             level => 123, 

@@ -9,9 +9,13 @@ use DBI;
 use JSON;
 use Path::Tiny;
 
+use Spacecorp::Regex qw(isInt);
+
 use Exporter qw(import);
-use Data::Dumper;
-our @EXPORT_OK = qw(updateAll getAll setMetal getMetal);
+#getAll gets all the resources and updates them all too
+#getUsersResAmt gets only 1 res type. (it also updates it..)
+#changeResAmt adds or subtracts ,,,$amt of ,,$res, from users account
+our @EXPORT_OK = qw(getAll getUsersResAmt changeResAmt);
 our %producedByName = (cash => "Command_Center", metal => "Metal_Mine", crystal => "Crystal_Mine", gas => "Gas_Mine");
 
 sub getAmtHr {
@@ -75,7 +79,96 @@ sub updateResT {
     return 1;
 }
 
+# IT IS ASSUMED THAT $AMT IS NEGATIVE INT IF THIS FUNCTION IS BEING CALLED.
+sub hasEnough {
+    my ($idn, $DBH, $res, $amt) = @_;
+    # updates resources so lets run this
+    getAll($idn, $DBH);
+    # then... see if we have enough of it
+    my $sth = $DBH->prepare("SELECT resources FROM userResources WHERE IDN = ?");
+    $sth->execute($idn) or return 0;
+    my $resCol = decode_json $sth->fetchrow_hashref()->{resources};
+    my $hasAmt;
+    foreach my $resource (@{$resCol->{resources}}) {
+        if ((keys $resource)[0] =~ /^$res$/) {
+            $hasAmt = (values $resource)[0];
+        }
+    }
+    my $nonnegAmt = $amt =~ s/-//gmr; #/
+    if (($hasAmt - $nonnegAmt) < 0) {
+        return ($hasAmt - $nonnegAmt);
+    }
+    else {
+        return 0;
+    }
+}
+
+# get amount of $res that the user has.
+sub getUsersResAmt {
+    my ($idn, $DBH, $res) = @_;
+    # updates resources so lets run this
+    getAll($idn, $DBH);
+    my $sth = $DBH->prepare("SELECT resources FROM userResources WHERE IDN = ?");
+    $sth->execute($idn) or return 0;
+    my $resCol = decode_json $sth->fetchrow_hashref()->{resources};
+    my $hasAmt;
+    foreach my $resource (@{$resCol->{resources}}) {
+        if ((keys $resource)[0] =~ /^$res$/) {
+            $hasAmt = (values $resource)[0];
+        }
+    }
+    return $hasAmt;
+}
+
+# doesn't check for anything, assumes the user has enough and etc.
+# adds or subtracts depends on whether $amt is pos or neg
+sub updateResAmt {
+    my ($idn, $DBH, $res, $amt) = @_;
+
+
+    # OK SO I CANT DO THIS AND CALL getUsersResAmt,
+    # CANNOT...
+    # BECAUSE.
+    # resources contains a JSON Obj.
+    # and I need that object PLUS update the res... bla so
+    # just get the raw obj from DB 
+    # first getAll().
+    # then get raw obj from DB.
+    # then loop thru keys until $res = $fromObjRes
+    # values[0] += $amt if POSITIVE -= $amt if NEGATIVE
+
+    # my $sth = $DBH->prepare("UPDATE userResources SET resources = ? ");
+    # $sth->execute($idn) or return 0;
+}
+
+sub changeResAmt {
+    my ($idn, $DBH, $res, $amt) = @_;
+    #check to see if amt is a number. (integer preferably)
+    if(!isInt($amt)) {
+        print $amt . " isn't an int";
+        exit;
+    }
+    print getUsersResAmt($idn, $DBH, $res);
+    #check to see if we have enough of the resource before subtracting it from our bal.
+    if ($amt < 0) {
+        #only call this function if $amt is negative.
+        if (hasEnough($idn, $DBH, $res, $amt)) {
+            print "You need " . hasEnough($idn, $DBH, $res, $amt) =~ s/-//r . " more \n"; #/
+            exit;
+        }
+        # we have enough of the resource & want to take $amt away from current bal.
+        updateResAmt($idn, $DBH, $res, $amt);
+    }
+    else {
+        # we are adding a resource.
+        updateResAmt($idn, $DBH, $res, $amt);
+    }
+}
+
 # gets all resources, but before returning them, updates them to currentTimestamp values
+# $resC, $diff are optional. if not supplied - the function will simply return current resC amounts
+# if supplied resC, and supplied $diff, 
+# then resources resC will add/subtract $diff from the current amount of resC.
 sub getAll {
     my ($idn, $DBH) = @_;
     my $nowTime = time();
@@ -94,7 +187,12 @@ sub getAll {
                 my $buildLevel = getBuildLevelFromName($producedByName{$k}, $bLevelCol);
                 my $amtHr = getAmtHr($producedByName{$k}, $buildLevel);
                 my $resNew = calcNewRes($v, $resColT, $nowTime, $amtHr);
+
                 $newJson = updateRes($idn, $nowTime, $k, $resNew, $resCol, $DBH);
+            }
+            else {
+                # not a producable resource, so `gems` would fall into this category
+                # not sure if I'd want to do anything here, but just for now ...
             }
         }
     }
